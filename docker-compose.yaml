@@ -1,0 +1,26 @@
+services:
+  backend:
+    build: ./backend
+    image: prasadkumbhar09/flask-backend:latest
+    container_name: flask-backend
+    ports:
+      - "5000:5000"
+    networks:
+      - app-network
+
+  frontend:
+    build: ./frontend
+    image: prasadkumbhar09/react-frontend:latest
+    container_name: express-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      BACKEND_URL: http://backend:5000
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
